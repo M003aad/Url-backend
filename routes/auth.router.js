@@ -36,7 +36,6 @@ authRouter.get('/ping', (req, res) => {
 
 authRouter.post(
   '/register',
-  registerRateLimit,
   validate(registerValidator),
   registerController,
 );

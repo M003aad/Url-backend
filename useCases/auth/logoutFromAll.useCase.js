@@ -1,6 +1,5 @@
 import {
   findSessionById,
-  logout,
   logoutFromAll,
 } from '../../services/JWT/jwt.service.js';
 import { findUserByIdentity } from '../../services/domain/user.service.js';
@@ -9,14 +8,12 @@ import checkUserStatus from '../../utils/checkUserStatus.util.js';
 import { assertValidSessionPayload } from '../../utils/assertValidSessionPayload.util.js';
 import assertRoleMatches from '../../utils/assertRoleMatches.utils.js';
 import { assertActiveSession } from '../../utils/assertValidSession.util.js';
-import assertIpMatches from '../../utils/assertIpMatches.util.js';
 import { assertUserExists } from '../../utils/assertValidUser.util.js';
 
-export const logoutFromAllUseCase = async (token, currentIp) => {
+export const logoutFromAllUseCase = async (token) => {
   const decoded = verifyJWT(token, { ignoreExpiration: true });
-  const { userId, role, sessionId, ip } = decoded;
-  if (currentIp !== ip) await logout(sessionId);
-  assertIpMatches(currentIp, ip);
+  const { userId, role, sessionId} = decoded;
+
   assertValidSessionPayload({ userId, role, sessionId });
 
   const session = await findSessionById(sessionId);

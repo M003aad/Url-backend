@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 });
 
 // Apply Global Rate Limiting to all incoming traffic
-app.use(globalRateLimit);
+// app.use(globalRateLimit);
 
 // --- Application Routes ---
 app.get('/sw.js/', (req, res) => res.status(204).end());

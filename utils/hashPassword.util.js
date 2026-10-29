@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 export const hashPassword = (password) => {
-  return bcrypt.hash(password, 12);
+  return bcrypt.hash(password, 10);
 };
 
 export default hashPassword;

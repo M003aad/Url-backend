@@ -37,23 +37,13 @@ export const assertActiveSession = (sessionDoc) => {
  */
 export const assertValidDataInSession = (
   session,
-  { userId, currentIp },
-  incomingUserAgent,
+  { userId}
 ) => {
   if (session.userId.toString() !== userId.toString()) {
     throw new AppError(
       RESPONSE_MESSAGES[ERROR_CODES.UNAUTHORIZED],
       401,
       ERROR_CODES.USER_ID_INVALID,
-    );
-  }
-  assertIpMatches(currentIp, session.deviceIp);
-
-  if (session.userAgent !== incomingUserAgent) {
-    throw new AppError(
-      RESPONSE_MESSAGES[ERROR_CODES.UNAUTHORIZED],
-      401,
-      ERROR_CODES.USER_AGENT_DIFFERENT,
     );
   }
 };

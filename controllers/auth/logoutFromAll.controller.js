@@ -6,9 +6,8 @@ import { assertTokenExists } from '../../utils/assertTokenExists.util.js';
 export async function logoutFromAllController(req, res) {
   try {
     const token = req.cookies?.accessToken;
-    const currentIp = req.clientIp;
 
-    assertTokenExists(token, currentIp);
+    assertTokenExists(token);
 
     await logoutFromAllUseCase(token);
 
