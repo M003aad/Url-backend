@@ -9,7 +9,8 @@ const startTestServer = async () => {
   return server;
 };
 
-const randomIp = () => `10.0.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+const randomIp = () =>
+  `10.0.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
 
 const buildRequestOptions = (method, body) => {
   const options = { method, headers: { 'x-forwarded-for': randomIp() } };
@@ -60,7 +61,12 @@ test('global route coverage for all app routes', async (t) => {
         body: {},
         expectedStatus: 400,
       },
-      { name: 'logout token missing', path: '/auth/logout', method: 'POST', expectedStatus: 403 },
+      {
+        name: 'logout token missing',
+        path: '/auth/logout',
+        method: 'POST',
+        expectedStatus: 403,
+      },
       {
         name: 'logoutFromAll token missing',
         path: '/auth/logoutFromAll',
@@ -81,8 +87,18 @@ test('global route coverage for all app routes', async (t) => {
         body: {},
         expectedStatus: 400,
       },
-      { name: 'refresh token missing', path: '/auth/refresh', method: 'POST', expectedStatus: 403 },
-      { name: 'profile me protected', path: '/profile/me', method: 'GET', expectedStatus: 403 },
+      {
+        name: 'refresh token missing',
+        path: '/auth/refresh',
+        method: 'POST',
+        expectedStatus: 403,
+      },
+      {
+        name: 'profile me protected',
+        path: '/profile/me',
+        method: 'GET',
+        expectedStatus: 403,
+      },
       {
         name: 'profile me update protected',
         path: '/profile/me',
@@ -123,13 +139,26 @@ test('global route coverage for all app routes', async (t) => {
         method: 'DELETE',
         expectedStatus: 403,
       },
-      { name: 'get all urls protected', path: '/getAllUrls', method: 'GET', expectedStatus: 403 },
+      {
+        name: 'get all urls protected',
+        path: '/getAllUrls',
+        method: 'GET',
+        expectedStatus: 403,
+      },
     ];
 
     for (const routeCase of cases) {
       await t.test(routeCase.name, async () => {
-        const response = await request(server, routeCase.path, buildRequestOptions(routeCase.method, routeCase.body));
-        assert.strictEqual(response.status, routeCase.expectedStatus, `${routeCase.name} status`);
+        const response = await request(
+          server,
+          routeCase.path,
+          buildRequestOptions(routeCase.method, routeCase.body),
+        );
+        assert.strictEqual(
+          response.status,
+          routeCase.expectedStatus,
+          `${routeCase.name} status`,
+        );
       });
     }
   } finally {

@@ -7,9 +7,7 @@ export async function loginController(req, res, next) {
   const { email, password } = req.body;
 
   try {
-    const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.ip || null;
-    const userAgent = req.headers['user-agent'] || 'Unknown Device';
-    const data = { email, password, ip, userAgent };
+    const data = { email, password };
 
     const { accessToken } = await loginUseCase(data);
 

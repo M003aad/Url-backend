@@ -1,17 +1,13 @@
 import Session from '../../models/Session.model.js';
 
-export const createSession = async (userId, userAgent, deviceIp, expiresAt) => {
+export const createSession = async (userId, expiresAt) => {
   await Session.deleteMany({
-    userId,
-    deviceIp,
-    userAgent,
+    userId
   });
 
   return await Session.create({
     userId,
-    deviceIp,
-    userAgent,
-    expiresAt,
+    expiresAt
   });
 };
 

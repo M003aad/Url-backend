@@ -8,7 +8,7 @@ import ERROR_CODES from '../../constants/errorCodes.constant.js';
 
 export const loginUseCase = async (data) => {
   try {
-    const { email, password, ip, userAgent } = data;
+    const { email, password } = data;
 
     const user = await findUserByIdentity(
       { email },
@@ -30,14 +30,14 @@ export const loginUseCase = async (data) => {
     const daysToExpire = 30;
     const expiresAt = new Date(Date.now() + daysToExpire * 24 * 60 * 60 * 1000);
 
-    const savedSession = await createSession(userId, userAgent, ip, expiresAt);
+    const savedSession = await createSession(userId, expiresAt);
+    
     const sessionId = savedSession._id;
 
     const accessPayload = {
       userId,
       role,
       sessionId,
-      ip,
     };
 
     const accessExpire = Number(env.JWT_EXPIRES);

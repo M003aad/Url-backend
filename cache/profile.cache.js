@@ -4,7 +4,7 @@ import { redisClient } from '../config/redis.config.js';
 
 export const localProfileCache = new LRUCache({
   max: 5000,
-  ttl: 1000 * 60 * 15, 
+  ttl: 1000 * 60 * 15,
 });
 
 const getProfileCacheKey = (userId) => `user:profile:${userId}`;
@@ -40,7 +40,6 @@ export const cacheProfile = async (userId, profileData) => {
     console.error('Failed to set profile in Redis cache:', error);
   }
 };
-
 
 export const invalidateProfileCache = async (userId) => {
   const cacheKey = getProfileCacheKey(userId);

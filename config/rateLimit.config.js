@@ -71,7 +71,7 @@ export const urlRedirectLimiterConfig = {
 export const profileUpdateLimiterConfig = {
   store: createUpstashStore('ratelimit:profile_update:', 15 * 60),
   windowMs: 15 * 60 * 1000,
-  limit: 15, 
+  limit: 15,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
   errorCode: ERROR_CODES.RATELIMIT_PROFILE_UPDATE || ERROR_CODES.RATELIMIT,

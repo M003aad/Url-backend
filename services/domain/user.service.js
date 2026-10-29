@@ -18,7 +18,7 @@ export const createUser = async (data, options = {}) => {
 
     throw new AppError(RESPONSE_MESSAGES[errorCode], 409, errorCode);
   }
-}
+};
 export const activateAccount = async (userId) => {
   return User.findByIdAndUpdate(
     userId,

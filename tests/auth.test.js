@@ -16,7 +16,8 @@ const startTestServer = async () => {
   return server;
 };
 
-const randomIp = () => `10.0.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+const randomIp = () =>
+  `10.0.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
 
 const buildRequestOptions = (method, body) => {
   const headers = { 'x-forwarded-for': randomIp() };
@@ -129,8 +130,16 @@ test('auth validation and route coverage with request data', async (t) => {
 
     for (const routeCase of cases) {
       await t.test(routeCase.name, async () => {
-        const response = await request(server, routeCase.path, buildRequestOptions(routeCase.method, routeCase.body));
-        assert.strictEqual(response.status, routeCase.expectedStatus, `${routeCase.name} status`);
+        const response = await request(
+          server,
+          routeCase.path,
+          buildRequestOptions(routeCase.method, routeCase.body),
+        );
+        assert.strictEqual(
+          response.status,
+          routeCase.expectedStatus,
+          `${routeCase.name} status`,
+        );
       });
     }
   } finally {
@@ -156,12 +165,16 @@ test('real account lifecycle: register, resend activation, activate, forget, res
   const newPassword = 'StrongerPass2!';
 
   try {
-    const registerResponse = await request(server, '/auth/register', buildRequestOptions('POST', {
-      firstName: 'Test',
-      lastName: 'User',
-      email: testEmail,
-      password: originalPassword,
-    }));
+    const registerResponse = await request(
+      server,
+      '/auth/register',
+      buildRequestOptions('POST', {
+        firstName: 'Test',
+        lastName: 'User',
+        email: testEmail,
+        password: originalPassword,
+      }),
+    );
 
     assert.strictEqual(registerResponse.status, 201);
     const registerBody = await registerResponse.json();
@@ -177,18 +190,32 @@ test('real account lifecycle: register, resend activation, activate, forget, res
     assert.ok(activationLinkMatch, 'Activation link not found in email HTML');
     const firstActivationToken = activationLinkMatch[1].split('/').pop();
 
-    const resendResponse = await request(server, '/auth/resend-activate', buildRequestOptions('POST', {
-      email: testEmail,
-    }));
+    const resendResponse = await request(
+      server,
+      '/auth/resend-activate',
+      buildRequestOptions('POST', {
+        email: testEmail,
+      }),
+    );
 
     assert.strictEqual(resendResponse.status, 201);
-    assert.ok(capturedEmails.length > 1, 'Expected resend activation email to be captured');
+    assert.ok(
+      capturedEmails.length > 1,
+      'Expected resend activation email to be captured',
+    );
     const resentActivationHtml = capturedEmails[1].html || capturedEmails[1].text || '';
     const resentActivationLinkMatch = resentActivationHtml.match(/href="([^"]+)"/);
-    assert.ok(resentActivationLinkMatch, 'Resend activation link not found in email HTML');
+    assert.ok(
+      resentActivationLinkMatch,
+      'Resend activation link not found in email HTML',
+    );
     const resendActivationToken = resentActivationLinkMatch[1].split('/').pop();
 
-    const activateResponse = await request(server, `/auth/activate/${resendActivationToken}`, buildRequestOptions('GET'));
+    const activateResponse = await request(
+      server,
+      `/auth/activate/${resendActivationToken}`,
+      buildRequestOptions('GET'),
+    );
     assert.strictEqual(activateResponse.status, 200);
     const activateBody = await activateResponse.json();
     assert.ok(activateBody.message.includes('activated'));
@@ -197,9 +224,13 @@ test('real account lifecycle: register, resend activation, activate, forget, res
     assert.ok(activatedUser, 'Expected user to still exist after activation');
     assert.strictEqual(activatedUser.emailVerified, true);
 
-    const forgetResponse = await request(server, '/auth/forget-password', buildRequestOptions('POST', {
-      email: testEmail,
-    }));
+    const forgetResponse = await request(
+      server,
+      '/auth/forget-password',
+      buildRequestOptions('POST', {
+        email: testEmail,
+      }),
+    );
 
     assert.strictEqual(forgetResponse.status, 201);
     assert.ok(capturedEmails.length > 2, 'Expected forget password email to be captured');
@@ -208,19 +239,27 @@ test('real account lifecycle: register, resend activation, activate, forget, res
     assert.ok(resetTokenMatch, 'Reset token not found in email HTML');
     const resetToken = resetTokenMatch[1];
 
-    const resetResponse = await request(server, '/auth/reset-password', buildRequestOptions('POST', {
-      code: resetToken,
-      newPassword,
-    }));
+    const resetResponse = await request(
+      server,
+      '/auth/reset-password',
+      buildRequestOptions('POST', {
+        code: resetToken,
+        newPassword,
+      }),
+    );
 
     assert.strictEqual(resetResponse.status, 201);
     const resetBody = await resetResponse.json();
     assert.ok(resetBody.message.includes('successfully reset'));
 
-    const loginResponse = await request(server, '/auth/login', buildRequestOptions('POST', {
-      email: testEmail,
-      password: newPassword,
-    }));
+    const loginResponse = await request(
+      server,
+      '/auth/login',
+      buildRequestOptions('POST', {
+        email: testEmail,
+        password: newPassword,
+      }),
+    );
 
     assert.strictEqual(loginResponse.status, 201);
     const loginBody = await loginResponse.json();
@@ -228,8 +267,12 @@ test('real account lifecycle: register, resend activation, activate, forget, res
   } finally {
     server.close();
     nodemailer.createTransport = originalCreateTransport;
-    await ActivationToken.deleteMany({ user: (await User.findOne({ email: testEmail }))?._id });
-    await ResetToken.deleteMany({ user: (await User.findOne({ email: testEmail }))?._id });
+    await ActivationToken.deleteMany({
+      user: (await User.findOne({ email: testEmail }))?._id,
+    });
+    await ResetToken.deleteMany({
+      user: (await User.findOne({ email: testEmail }))?._id,
+    });
     await Session.deleteMany({ userId: (await User.findOne({ email: testEmail }))?._id });
     await User.deleteOne({ email: testEmail });
     await mongoose.disconnect();

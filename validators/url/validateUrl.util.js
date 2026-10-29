@@ -2,7 +2,7 @@ import validator from 'validator';
 import ipaddr from 'ipaddr.js';
 import dns from 'node:dns/promises';
 import net from 'node:net';
-import appError from '../../errors/appError.error.js'
+import appError from '../../errors/appError.error.js';
 
 function isPrivateIp(ipString) {
   try {

@@ -9,7 +9,7 @@ export const protect = async (req, res, next) => {
     const decoded = verifyJWT(token);
 
     const clientIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.ip;
-    console.log(clientIp)
+    console.log(clientIp);
     assertIpMatches(clientIp, decoded.ip);
 
     req.userId = decoded.userId;

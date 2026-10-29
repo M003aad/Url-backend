@@ -9,16 +9,6 @@ const sessionschema = new mongoose.Schema(
       index: true,
     },
 
-    userAgent: {
-      type: String,
-      default: 'Unknown agent device', // Fixed typo: default & Unknown
-    },
-
-    deviceIp: {
-      type: String,
-      default: 'Unknown ip device', // Fixed typo: Unknown
-    },
-
     expiresAt: {
       type: Date,
       required: true,
@@ -31,7 +21,7 @@ const sessionschema = new mongoose.Schema(
   },
 );
 
-sessionschema.index({ userId: 1, deviceIp: 1, userAgent: 1 }, { unique: true });
+sessionschema.index({ userId: 1 }, { unique: true });
 
 const Session = mongoose.model('Session', sessionschema);
 

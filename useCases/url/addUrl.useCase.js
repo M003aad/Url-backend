@@ -35,7 +35,6 @@ export const addUrlUseCase = async (userId, url) => {
     userId: userId,
   });
 
-
   cacheUrl(code, safeOriginalUrl).catch((err) => {
     console.error(`Failed to pre-warm cache for code ${code}:`, err);
   });

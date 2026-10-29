@@ -27,7 +27,7 @@ const errorHandler = (err, req, res, next) => {
 
   console.log('====================================');
   console.error('🔥 ERROR LOG:', err.message);
-  // console.error('📍 STACK TRACE:', err.stack); 
+  // console.error('📍 STACK TRACE:', err.stack);
   console.log('📊 Status Code:', statusCode);
   console.log('🔑 Error Code:', code);
   console.log('====================================');

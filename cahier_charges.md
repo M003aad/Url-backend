@@ -79,31 +79,31 @@
 
 ### 🌐 Public & Auth Endpoints
 
-| Endpoint                       | Method | Rate Limit Middleware    | Description                                                |
-| ------------------------------ | ------ | ------------------------ | ---------------------------------------------------------- |
-| `/r/:code`                     | `GET`  | `urlRedirectRateLimit`   | Redirects a short code to its original URL                 |
-| `/auth/ping`                   | `GET`  | none                     | Health check endpoint                                      |
-| `/auth/register`               | `POST` | `registerRateLimit`      | Register a new user                                        |
-| `/auth/activate/:token`        | `GET`  | none                     | Activate a new account using token                         |
-| `/auth/resend-activate`        | `POST` | `emailSpamRateLimit`     | Resend activation email                                    |
-| `/auth/login`                  | `POST` | `authRateLimit`          | Authenticate user and create session                       |
-| `/auth/refresh`                | `POST` | none                     | Refresh authentication tokens                              |
-| `/auth/forget-password`        | `POST` | `emailSpamRateLimit`     | Request password reset code/email                          |
-| `/auth/reset-password`         | `POST` | `authRateLimit`          | Reset password using reset code                            |
+| Endpoint                | Method | Rate Limit Middleware  | Description                                |
+| ----------------------- | ------ | ---------------------- | ------------------------------------------ |
+| `/r/:code`              | `GET`  | `urlRedirectRateLimit` | Redirects a short code to its original URL |
+| `/auth/ping`            | `GET`  | none                   | Health check endpoint                      |
+| `/auth/register`        | `POST` | `registerRateLimit`    | Register a new user                        |
+| `/auth/activate/:token` | `GET`  | none                   | Activate a new account using token         |
+| `/auth/resend-activate` | `POST` | `emailSpamRateLimit`   | Resend activation email                    |
+| `/auth/login`           | `POST` | `authRateLimit`        | Authenticate user and create session       |
+| `/auth/refresh`         | `POST` | none                   | Refresh authentication tokens              |
+| `/auth/forget-password` | `POST` | `emailSpamRateLimit`   | Request password reset code/email          |
+| `/auth/reset-password`  | `POST` | `authRateLimit`        | Reset password using reset code            |
 
 ### 🔒 Protected Endpoints (Requires Authentication)
 
-| Endpoint                        | Method | Description                                    |
-| ------------------------------- | ------ | ---------------------------------------------- |
-| `/auth/logout`                  | `POST` | Logout from current session                     |
-| `/auth/logoutFromAll`           | `POST` | Logout from all sessions                        |
-| `/add-url`                      | `POST` | Create a new shortened URL                      |
-| `/getAllUrls`                   | `GET`  | Retrieve authenticated user’s URLs              |
-| `/delete-url/:urlId`            | `DELETE` | Delete a specific user-owned shortened URL  |
-| `/profile/me`                   | `GET`  | Retrieve current user profile                   |
-| `/profile/me`                   | `PUT`  | Update first/last name                          |
-| `/profile/change-password`      | `PUT`  | Change user password                            |
-| `/profile/delete-account`       | `PATCH`| Delete authenticated user account               |
+| Endpoint                   | Method   | Description                                |
+| -------------------------- | -------- | ------------------------------------------ |
+| `/auth/logout`             | `POST`   | Logout from current session                |
+| `/auth/logoutFromAll`      | `POST`   | Logout from all sessions                   |
+| `/add-url`                 | `POST`   | Create a new shortened URL                 |
+| `/getAllUrls`              | `GET`    | Retrieve authenticated user’s URLs         |
+| `/delete-url/:urlId`       | `DELETE` | Delete a specific user-owned shortened URL |
+| `/profile/me`              | `GET`    | Retrieve current user profile              |
+| `/profile/me`              | `PUT`    | Update first/last name                     |
+| `/profile/change-password` | `PUT`    | Change user password                       |
+| `/profile/delete-account`  | `PATCH`  | Delete authenticated user account          |
 
 ---
 

@@ -25,6 +25,7 @@ import {
   registerRateLimit,
   emailSpamRateLimit,
 } from '../middlewares/rateLimit.middleware.js';
+
 import { refreshController } from '../controllers/auth/refresh.controller.js';
 
 const authRouter = Router();

@@ -7,17 +7,14 @@ import { invalidateProfileCache } from '../../cache/profile.cache.js'; // 1. Imp
 
 export const deleteAccountUseCase = async (data) => {
   const { userId, password } = data;
-  
-  const user = await findUserByIdentity(
-    { id: userId },
-    'emailVerified status +password',
-  );
+
+  const user = await findUserByIdentity({ id: userId }, 'emailVerified status +password');
 
   assertEmailIsVerified(user);
   checkUserStatus(user.status);
 
   await comparePassword(password, user.password);
-  
+
   await deleteAccount(userId);
 
   await invalidateProfileCache(userId);

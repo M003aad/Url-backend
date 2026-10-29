@@ -38,7 +38,7 @@ const createRateLimiterMiddleware = (config) => {
         throw new AppError(
           RESPONSE_MESSAGES[specificErrorCode] || 'Too many requests.',
           429,
-          specificErrorCode
+          specificErrorCode,
         );
       }
 
@@ -58,5 +58,9 @@ export const emailSpamRateLimit = createRateLimiterMiddleware(emailSpamLimiterCo
 // --- OTHER ROUTES EXPORTS ---
 export const urlCreateRateLimit = createRateLimiterMiddleware(urlCreateLimiterConfig);
 export const urlRedirectRateLimit = createRateLimiterMiddleware(urlRedirectLimiterConfig);
-export const profileUpdateRateLimit = createRateLimiterMiddleware(profileUpdateLimiterConfig);
-export const sensitiveActionRateLimit = createRateLimiterMiddleware(sensitiveActionLimiterConfig);
+export const profileUpdateRateLimit = createRateLimiterMiddleware(
+  profileUpdateLimiterConfig,
+);
+export const sensitiveActionRateLimit = createRateLimiterMiddleware(
+  sensitiveActionLimiterConfig,
+);
