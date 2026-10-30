@@ -6,19 +6,21 @@ import assertExistCode from '../../utils/assertExitCode.util.js';
 import { localUrlCache } from '../../cache/url.cache.js';
 
 export const getOriginalUrlByCodeUseCase = async (code) => {
-
+  // fetch value by code in memory cache 
   let originalUrl = localUrlCache.get(code);
   if (!originalUrl) {
-    // 2. Cache Miss: Fetch from MongoDB Atlas (~78ms)
+    //  Cache Miss: Fetch from MongoDB Atlas (78ms)
     const urlDoc = await findOriginalUrlByCode(code);
     assertExistCode(urlDoc);
 
     originalUrl = urlDoc.originalUrl;
-    urlCache.set(code, originalUrl);
-  }
+    // code : key  / originalUrl : value
+    localUrlCache.set(code, originalUrl);
+  }; 
+
   incrementClickCount(code).catch(() => {});
 
-  return urlDoc.originalUrl;
+  return originalUrl;
 };
 
 export default getOriginalUrlByCodeUseCase;
