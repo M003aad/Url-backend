@@ -20,8 +20,6 @@ import forgetPasswordController from '../controllers/auth/forgetPassword.control
 import resetPasswordValidator from '../validators/auth/resetPassword.validator.js';
 import resetPasswordController from '../controllers/auth/resetPassword.controller.js';
 
-
-
 import { refreshController } from '../controllers/auth/refresh.controller.js';
 
 const authRouter = Router();
@@ -30,11 +28,7 @@ authRouter.get('/ping', (req, res) => {
   res.json({ success: true, message: 'auth service up' });
 });
 
-authRouter.post(
-  '/register',
-  validate(registerValidator),
-  registerController,
-);
+authRouter.post('/register', validate(registerValidator), registerController);
 
 authRouter.get('/activate/:token', validate(activationValidator), activationController);
 

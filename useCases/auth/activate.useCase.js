@@ -37,7 +37,7 @@ export const activateUseCase = async (rawToken) => {
     await session.abortTransaction();
     throw error;
   } finally {
-      await session.endSession();
+    await session.endSession();
   }
 };
 

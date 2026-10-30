@@ -35,10 +35,7 @@ export const assertActiveSession = (sessionDoc) => {
  * @param {Object} tokenPayload - The decoded data from the incoming JWT
  * @param {string} incomingUserAgent - The current request's user-agent header string
  */
-export const assertValidDataInSession = (
-  session,
-  { userId}
-) => {
+export const assertValidDataInSession = (session, { userId }) => {
   if (session.userId.toString() !== userId.toString()) {
     throw new AppError(
       RESPONSE_MESSAGES[ERROR_CODES.UNAUTHORIZED],

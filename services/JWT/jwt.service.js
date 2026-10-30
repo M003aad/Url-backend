@@ -2,12 +2,12 @@ import Session from '../../models/Session.model.js';
 
 export const createSession = async (userId, expiresAt) => {
   await Session.deleteMany({
-    userId
+    userId,
   });
 
   return await Session.create({
     userId,
-    expiresAt
+    expiresAt,
   });
 };
 

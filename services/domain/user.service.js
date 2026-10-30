@@ -40,12 +40,11 @@ export const resetPasswordByUser = async (userId, hashedPassword) => {
  * @param {Object} identifiers - { id, email, username }
  * @param {string} [selectFields] - Optional Space-separated fields to select/project
  */
-export const findUserByIdentity = async ({ id, email, username }, selectFields = '') => {
+export const findUserByIdentity = async ({ id, email }, selectFields = '') => {
   const query = [];
 
   if (id) query.push({ _id: id });
   if (email) query.push({ email });
-  if (username) query.push({ username });
 
   if (query.length === 0) return null;
 

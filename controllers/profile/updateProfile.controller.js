@@ -4,9 +4,9 @@ import updateProfileUseCase from '../../useCases/profile/updateProfile.useCase.j
 
 export async function updateProfileController(req, res, next) {
   try {
-    const userId = req.userId;
+    const user = req.user;
     const { firstName, lastName } = req.body;
-    const data = { userId, firstName, lastName };
+    const data = { user, firstName, lastName };
     const profile = await updateProfileUseCase(data);
 
     res.status(201).json({

@@ -18,11 +18,7 @@ const profileRouter = Router();
 
 profileRouter.get('/me', getProfileController);
 
-profileRouter.put(
-  '/me',
-  validate(updateProfileValidator),
-  updateProfileController,
-);
+profileRouter.put('/me', validate(updateProfileValidator), updateProfileController);
 
 profileRouter.put(
   '/change-password',

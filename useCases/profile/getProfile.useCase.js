@@ -1,22 +1,23 @@
-import checkUserStatus from '../../utils/checkUserStatus.util.js';
-import { assertEmailIsVerified } from '../../utils/assertValidUser.util.js';
-import { findUserByIdentity } from '../../services/domain/user.service.js';
+// Don't be like this useCase
 
-export const getProfileUseCase = async (userId) => {
-  
-  const profile = await findUserByIdentity(
-      { id: userId },
-      'email firstName lastName emailVerified status',
-    );
+// import checkUserStatus from '../../utils/checkUserStatus.util.js';
+// import { assertEmailIsVerified } from '../../utils/assertValidUser.util.js';
+// import { findUserByIdentity } from '../../services/domain/user.service.js';
 
-  assertEmailIsVerified(profile);
-  checkUserStatus(profile.status);
+// export const getProfileUseCase = async (userId) => {
+//   const profile = await findUserByIdentity(
+//     { id: userId },
+//     'email firstName lastName emailVerified status',
+//   );
 
-  return {
-    firstName: profile.firstName,
-    lastName: profile.lastName,
-    email: profile.email,
-  };
-};
+//   assertEmailIsVerified(profile);
+//   checkUserStatus(profile.status);
 
-export default getProfileUseCase;
+//   return {
+//     firstName: profile.firstName,
+//     lastName: profile.lastName,
+//     email: profile.email,
+//   };
+// };
+
+// export default getProfileUseCase;
