@@ -61,6 +61,9 @@ const userSchema = new mongoose.Schema(
   },
 );
 
+
+userSchema.index({ email: 1, deletedAt: 1 }, { unique: true });
+
 userSchema.index(
   { deletedAt: 1 },
   {

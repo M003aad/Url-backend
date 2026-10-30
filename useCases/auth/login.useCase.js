@@ -8,6 +8,7 @@ import ERROR_CODES from '../../constants/errorCodes.constant.js';
 
 export const loginUseCase = async (data) => {
   const { email, password } = data;
+
   const user = await findUserByIdentity(
     { email },
     'email emailVerified status role password',
@@ -15,7 +16,7 @@ export const loginUseCase = async (data) => {
 
   if (!user || !user.emailVerified || user.status !== 'active') {
     throw new AppError('Invalid email or password', 401, ERROR_CODES.LOGIN_FAILED);
-  }
+  };
 
   await comparePassword(password, user.password);
 
