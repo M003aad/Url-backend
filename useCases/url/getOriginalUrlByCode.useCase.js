@@ -6,7 +6,7 @@ import assertExistCode from '../../utils/assertExitCode.util.js';
 import { localUrlCache } from '../../cache/url.cache.js';
 
 export const getOriginalUrlByCodeUseCase = async (code) => {
-  // fetch value by code in memory cache 
+  // fetch value by code in memory cache
   let originalUrl = localUrlCache.get(code);
   if (!originalUrl) {
     //  Cache Miss: Fetch from MongoDB Atlas (78ms)
@@ -16,7 +16,7 @@ export const getOriginalUrlByCodeUseCase = async (code) => {
     originalUrl = urlDoc.originalUrl;
     // code : key  / originalUrl : value
     localUrlCache.set(code, originalUrl);
-  }; 
+  }
 
   incrementClickCount(code).catch(() => {});
 

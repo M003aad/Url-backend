@@ -4,8 +4,8 @@ import SUCCESS_CODES from '../../constants/successCodes.constant.js';
 
 export async function getProfileController(req, res, next) {
   try {
-    const  { firstName, lastName, email } = req.user;
-    const profile =  { firstName, lastName, email };
+    const { firstName, lastName, email } = req.user;
+    const profile = { firstName, lastName, email };
     res.status(201).json({
       profile,
       message: RESPONSE_MESSAGES[SUCCESS_CODES.GET_PROFILE],

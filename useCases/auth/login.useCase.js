@@ -15,7 +15,7 @@ export const loginUseCase = async (data) => {
 
   if (!user || !user.emailVerified || user.status !== 'active') {
     throw new AppError('Invalid email or password', 401, ERROR_CODES.LOGIN_FAILED);
-  };
+  }
 
   await comparePassword(password, user.password);
 

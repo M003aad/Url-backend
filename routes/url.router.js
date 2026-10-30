@@ -16,15 +16,9 @@ import getallUrlsController from '../controllers/url/getAllUrls.contsoller.js';
 
 const urlRouter = Router();
 
-// Apply creation limiter (10 per minute)
-urlRouter.post(
-  '/add-url',
-  protect,
-  validate(addUrlValidator),
-  addUrlController,
-);
 
-// Apply public redirect/lookup limiter (100 per minute)
+urlRouter.post('/add-url', protect, validate(addUrlValidator), addUrlController);
+
 urlRouter.get(
   '/r/:code',
   validate(getOriginalUrlByCodeValidator),

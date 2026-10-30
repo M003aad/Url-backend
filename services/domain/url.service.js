@@ -24,7 +24,7 @@ export const getAndIncrementUrl = async (code) => {
   return await Url.findOneAndUpdate(
     { urlCode: code },
     { $inc: { clicks: 1 } },
-    { select: 'originalUrl' }
+    { select: 'originalUrl' },
   ).lean();
 };
 

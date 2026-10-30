@@ -10,10 +10,7 @@ export const deleteAccountUseCase = async (data) => {
 
   await comparePassword(password, user.password);
 
-  await Promise.all([
-    deleteAccount(userId),
-    logoutFromAll(userId),
-  ]);
+  await Promise.all([deleteAccount(userId), logoutFromAll(userId)]);
 };
 
 export default deleteAccountUseCase;
