@@ -10,8 +10,7 @@ const urlSchema = new mongoose.Schema(
     urlCode: {
       type: String,
       required: true,
-      unique: true,
-      index: true,
+      unique: true, // unique بوحدها كافية وتنشئ B-Tree Index تلقائياً
       trim: true,
     },
     shortUrl: {
@@ -35,6 +34,8 @@ const urlSchema = new mongoose.Schema(
     versionKey: false,
   },
 );
+
+urlSchema.index({ userId: 1, createdAt: -1 });
 
 const Url = mongoose.model('Url', urlSchema);
 

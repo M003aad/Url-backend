@@ -45,26 +45,22 @@ export const findUrlAndDeleteIt = async (urlId, userId) => {
   });
 };
 
-export const getAllUrls = async (userId, page = 1, limit = 5) => {
+// url.service.js
+export const getAllUrls = async (userId, page, limit) => {
   const skip = (page - 1) * limit;
-  const userObjectId = new mongoose.Types.ObjectId(userId);
 
+  // إرسال Query د القراءة و Query د الحساب فـ نفس الوقت (Parallel)
   const [urls, totalUrls] = await Promise.all([
-    Url.find({ userId: userObjectId })
-      .select('_id originalUrl urlCode shortUrl clicks createdAt')
+    Url.find({ userId })
+      .select('originalUrl urlCode shortUrl clicks createdAt')
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
       .lean(),
-    Url.countDocuments({ userId: userObjectId }),
+    Url.countDocuments({ userId }),
   ]);
 
   const totalPages = Math.ceil(totalUrls / limit) || 1;
 
-  return {
-    urls,
-    totalUrls,
-    totalPages,
-    currentPage: page,
-  };
+  return { urls, totalUrls, totalPages, currentPage: page };
 };
