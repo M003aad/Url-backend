@@ -15,9 +15,7 @@ import assertValidToken from '../../utils/assertValidToken.util.js';
 export const activateUseCase = async (rawToken) => {
   const hashedToken = hashToken(rawToken);
   const activationToken = await findActivationToken(hashedToken);
-  if (activationToken && activationToken.expiresAt.getTime() < Date.now()) {
-    await activationToken.deleteOne();
-  }
+
   assertValidToken(activationToken, 'ACTIVATION');
   const user = await findUserByIdentity(
     { id: activationToken.user },
@@ -39,7 +37,7 @@ export const activateUseCase = async (rawToken) => {
     await session.abortTransaction();
     throw error;
   } finally {
-    session.endSession();
+      await session.endSession();
   }
 };
 

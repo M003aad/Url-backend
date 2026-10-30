@@ -39,23 +39,15 @@ export const resendActivationUseCase = async (email) => {
     await session.endSession();
   }
 
-  try {
-    await sendTypedMail({
+  setImmediate(() => {
+    sendTypedMail({
       type: TYPE_MAIL.ACTIVATION,
       to: user.email,
-      payload: {
-        username: user.username,
-        activationLink,
-      },
+      payload: { username: user.firstName, activationLink },
+    }).catch((mailError) => {
+      console.error(`Mail dispatch failed for ${user.email}:`, mailError);
     });
-  } catch (mailError) {
-    console.log(mailError);
-    throw new AppError(
-      RESPONSE_MESSAGES[ERROR_CODES.MAIL_FAILED_TO_SEND],
-      500,
-      ERROR_CODES.MAIL_FAILED_TO_SEND,
-    );
-  }
+  });
 };
 
 export default resendActivationUseCase;

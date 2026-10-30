@@ -48,7 +48,6 @@ export const registerUseCase = async (data) => {
   }
   console.timeEnd('⏱️ 3. DB Transaction');
 
-  // جرب هادي فـ اللخر ديال registerUseCase
   setImmediate(() => {
     sendTypedMail({
       type: TYPE_MAIL.ACTIVATION,

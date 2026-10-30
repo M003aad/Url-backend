@@ -20,11 +20,7 @@ import forgetPasswordController from '../controllers/auth/forgetPassword.control
 import resetPasswordValidator from '../validators/auth/resetPassword.validator.js';
 import resetPasswordController from '../controllers/auth/resetPassword.controller.js';
 
-import {
-  authRateLimit,
-  registerRateLimit,
-  emailSpamRateLimit,
-} from '../middlewares/rateLimit.middleware.js';
+
 
 import { refreshController } from '../controllers/auth/refresh.controller.js';
 
@@ -44,12 +40,11 @@ authRouter.get('/activate/:token', validate(activationValidator), activationCont
 
 authRouter.post(
   '/resend-activate',
-  emailSpamRateLimit,
   validate(resendActivationValidator),
   resendActivationController,
 );
 
-authRouter.post('/login', authRateLimit, validate(loginValidator), loginController);
+authRouter.post('/login', validate(loginValidator), loginController);
 
 authRouter.post('/logout', logoutController);
 
@@ -57,14 +52,12 @@ authRouter.post('/logoutFromAll', logoutFromAllController);
 
 authRouter.post(
   '/forget-password',
-  emailSpamRateLimit,
   validate(forgetPasswordValidator),
   forgetPasswordController,
 );
 
 authRouter.post(
   '/reset-password',
-  authRateLimit,
   validate(resetPasswordValidator),
   resetPasswordController,
 );
