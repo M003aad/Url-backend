@@ -27,7 +27,6 @@ export const changePassword = async (userId, hashedPassword) => {
  */
 export const deleteAccount = async (userId) => {
   const user = await User.findById(userId);
-  assertUserExists(user);
   user.status = 'suspended';
   await user.softDelete();
 };

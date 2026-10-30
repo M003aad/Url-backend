@@ -13,7 +13,6 @@ import errorHandler from './errors/errorHandler.error.js';
 import protect from './middlewares/auth.middleware.js';
 
 // Rate Limiting Import
-import { globalRateLimit } from './middlewares/rateLimit.middleware.js';
 
 // Routers
 import authRouter from './routes/auth.router.js';

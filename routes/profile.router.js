@@ -16,28 +16,22 @@ import deleteAccountController from '../controllers/profile/deleteAccount.contro
 
 const profileRouter = Router();
 
-profileRouter.get('/me', protect, getProfileController);
+profileRouter.get('/me', getProfileController);
 
 profileRouter.put(
   '/me',
-  protect,
-  profileUpdateRateLimit,
   validate(updateProfileValidator),
   updateProfileController,
 );
 
 profileRouter.put(
   '/change-password',
-  protect,
-  sensitiveActionRateLimit,
   validate(changePasswordValidator),
   changePasswordController,
 );
 
 profileRouter.patch(
   '/delete-account',
-  protect,
-  sensitiveActionRateLimit,
   validate(deleteAccountValidator),
   deleteAccountController,
 );

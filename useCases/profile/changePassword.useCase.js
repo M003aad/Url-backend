@@ -6,7 +6,6 @@ import hashPassword from '../../utils/hashPassword.util.js';
 import assertPasswordNotSameAsOld from '../../utils/assertPasswordNotSameAsOld.util.js';
 
 export const changePasswordUseCase = async (data) => {
-  try {
     const { userId, newPassword } = data;
     const user = await findUserByIdentity(
       { id: userId },
@@ -20,9 +19,6 @@ export const changePasswordUseCase = async (data) => {
     const hashedPassword = await hashPassword(newPassword);
 
     await changePassword(userId, hashedPassword);
-  } catch (error) {
-    throw error;
-  }
 };
 
 export default changePasswordUseCase;
