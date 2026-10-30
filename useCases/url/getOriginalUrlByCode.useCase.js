@@ -3,23 +3,19 @@ import {
   incrementClickCount,
 } from '../../services/domain/url.service.js';
 import assertExistCode from '../../utils/assertExitCode.util.js';
-import { getCachedUrl, cacheUrl } from '../../cache/url.cache.js';
+import { localUrlCache } from '../../cache/url.cache.js';
 
 export const getOriginalUrlByCodeUseCase = async (code) => {
-  // 1. Try cache hit (L1 or L2)
-  const cachedUrl = await getCachedUrl(code);
-  if (cachedUrl) {
-    incrementClickCount(code).catch(() => {});
-    return cachedUrl;
+
+  let originalUrl = localUrlCache.get(code);
+  if (!originalUrl) {
+    // 2. Cache Miss: Fetch from MongoDB Atlas (~78ms)
+    const urlDoc = await findOriginalUrlByCode(code);
+    assertExistCode(urlDoc);
+
+    originalUrl = urlDoc.originalUrl;
+    urlCache.set(code, originalUrl);
   }
-
-  // 2. Fall back to DB
-  const urlDoc = await findOriginalUrlByCode(code);
-  assertExistCode(urlDoc);
-
-  // 3. Cache the result
-  await cacheUrl(code, urlDoc.originalUrl);
-
   incrementClickCount(code).catch(() => {});
 
   return urlDoc.originalUrl;

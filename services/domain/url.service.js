@@ -20,8 +20,16 @@ export const checkCodeExists = async (code) => {
   return count > 0;
 };
 
+export const getAndIncrementUrl = async (code) => {
+  return await Url.findOneAndUpdate(
+    { urlCode: code },
+    { $inc: { clicks: 1 } },
+    { select: 'originalUrl' }
+  ).lean();
+};
+
 export const findOriginalUrlByCode = async (code) => {
-  return await Url.findOne({ urlCode: code }).lean();
+  return await Url.findOne({ urlCode: code }).select('originalUrl').lean();
 };
 
 export const incrementClickCount = async (code) => {

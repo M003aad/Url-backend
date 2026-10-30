@@ -1,9 +1,9 @@
 import { LRUCache } from 'lru-cache';
 import { redisClient } from '../config/redis.config.js';
 
-export const localCache = new LRUCache({
+export const localUrlCache = new LRUCache({
   max: 10000,
-  ttl: 1000 * 60 * 60, // 1 hour
+  ttl: 1000 * 60 * 10, // 1 hour
 });
 
 const getCacheKey = (code) => `url:${code}`;

@@ -20,7 +20,6 @@ const urlRouter = Router();
 urlRouter.post(
   '/add-url',
   protect,
-  urlCreateRateLimit,
   validate(addUrlValidator),
   addUrlController,
 );
@@ -28,7 +27,6 @@ urlRouter.post(
 // Apply public redirect/lookup limiter (100 per minute)
 urlRouter.get(
   '/r/:code',
-  urlRedirectRateLimit,
   validate(getOriginalUrlByCodeValidator),
   getOriginalUrlByCodeController,
 );
