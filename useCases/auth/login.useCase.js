@@ -38,6 +38,7 @@ export const loginUseCase = async (data) => {
   const accessToken = generateJWT(accessPayload, accessExpire);
 
   return {
+    userId,
     accessToken,
   };
 };
