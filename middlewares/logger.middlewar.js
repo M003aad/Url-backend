@@ -21,10 +21,6 @@ export const requestLogger = (req, res, next) => {
     browser: ua.browser !== 'unknown' ? ua.browser : 'Unknown',
   };
 
-  console.log(
-    `[LOG] ${req.method} ${req.originalUrl || req.url} - IP: ${ip} | Device: ${deviceType} | Browser: ${ua.browser} | UA: "${source}"`
-  );
-
   next();
 };
 

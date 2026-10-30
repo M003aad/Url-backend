@@ -16,7 +16,8 @@ export const logoutUseCase = async (token) => {
 
   const user = await findUserByIdentity({ id: userId });
 
-  assertUserExists(user);
-  return await logout(sessionId);
+  await logout(sessionId);
+
+  return userId;
 };
 export default logoutUseCase;

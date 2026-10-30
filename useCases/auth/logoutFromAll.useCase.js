@@ -21,7 +21,10 @@ export const logoutFromAllUseCase = async (token) => {
 
   assertRoleMatches(user.role, role);
 
-  return await logoutFromAll(userId);
+  await logoutFromAll(userId);
+
+  return userId;
+
 };
 
 export default logoutFromAllUseCase;

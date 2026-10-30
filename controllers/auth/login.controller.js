@@ -12,6 +12,7 @@ export async function loginController(req, res, next) {
 
     const { accessToken, userId } = await loginUseCase(data);
 
+    
     res.cookie('accessToken', accessToken, {
       ...cookieConfig,
       maxAge: TOKEN_LIFETIMES.ACCESS_TOKEN_MS,

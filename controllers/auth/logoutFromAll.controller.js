@@ -17,7 +17,24 @@ export async function logoutFromAllController(req, res) {
     });
 
     res.status(201).json({ message: RESPONSE_MESSAGES[SUCCESS_CODES.LOGOUT] });
+
+    logActivity({
+      actor: { userId: userId, email: null },
+      action: 'AUTH_LOGOUTFROMALL',
+      status: 'SUCCESS',
+      context: req.userMetadata,
+    });
+
   } catch (error) {
+
+    logActivity({
+      actor: { userId: userId || null, email: null },
+      action: 'AUTH_LOGOUTFROMALL',
+      status: 'FAILED',
+      failureReason: err,
+      context: req.userMetadata,
+    });
+
     throw error;
   }
 }

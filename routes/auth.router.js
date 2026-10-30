@@ -22,6 +22,7 @@ import resetPasswordController from '../controllers/auth/resetPassword.controlle
 
 import { refreshController } from '../controllers/auth/refresh.controller.js';
 
+import protect from "../middlewares/auth.middleware.js";
 const authRouter = Router();
 
 authRouter.get('/ping', (req, res) => {
@@ -40,9 +41,9 @@ authRouter.post(
 
 authRouter.post('/login', validate(loginValidator), loginController);
 
-authRouter.post('/logout', logoutController);
+authRouter.post('/logout', protect, logoutController);
 
-authRouter.post('/logoutFromAll', logoutFromAllController);
+authRouter.post('/logoutFromAll', protect, logoutFromAllController);
 
 authRouter.post(
   '/forget-password',
