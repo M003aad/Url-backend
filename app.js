@@ -18,6 +18,7 @@ import protect from './middlewares/auth.middleware.js';
 import authRouter from './routes/auth.router.js';
 import profileRouter from './routes/profile.router.js';
 import urlRouter from './routes/url.router.js';
+import requestLogger from './middlewares/logger.middlewar.js';
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
 // app.use(globalRateLimit);
 
 // --- Application Routes ---
+app.use(requestLogger);
 app.get('/sw.js/', (req, res) => res.status(204).end());
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.use('/auth', authRouter);

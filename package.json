@@ -39,6 +39,7 @@
     "@visulima/disposable-email-domains": "^1.0.0",
     "cron": "^4.4.0",
     "exif-reader": "^2.0.3",
+    "express-useragent": "^2.2.3",
     "helmet": "^8.1.0",
     "ipaddr.js": "^2.4.0",
     "lru-cache": "^11.5.2",
