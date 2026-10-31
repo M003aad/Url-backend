@@ -15,7 +15,7 @@ export async function resendActivationController(req, res, next) {
       message: RESPONSE_MESSAGES[SUCCESS_CODES.RESEND_ACTIVATION],
     });
 
-    result =  logActivityUseCase({
+    logActivityUseCase({
       actor: { userId, email },
       action: 'AUTH_RESEND_ACTIVATE',
       status: 'SUCCESS',

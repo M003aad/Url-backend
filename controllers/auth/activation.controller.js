@@ -4,8 +4,9 @@ import logActivityUseCase from '../../useCases/audit/logActivity.useCase.js';
 import activateUseCase from '../../useCases/auth/activate.useCase.js';
 
 export async function activationController(req, res, next) {
+  let userId;
   try {
-    const userId = await activateUseCase(req.params.token);
+    userId = await activateUseCase(req.params.token);
     res.status(200).json({
       message: RESPONSE_MESSAGES[SUCCESS_CODES.ACTIVATION],
     });
@@ -20,7 +21,7 @@ export async function activationController(req, res, next) {
   } catch (err) {
 
     logActivityUseCase({
-      actor: { userId: userId || null, email },
+      actor: { userId: userId || null, email : null },
       action: 'AUTH_ACTIVATE',
       status: 'FAILED',
       failureReason: err,
