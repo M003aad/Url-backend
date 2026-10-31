@@ -2,16 +2,12 @@ import RESPONSE_MESSAGES from '../../constants/responseMessages.constant.js';
 import refreshUseCase from '../../useCases/auth/refresh.useCase.js';
 import cookieConfig from '../../config/cookie.config.js';
 import SUCCESS_CODES from '../../constants/successCodes.constant.js';
-import { assertTokenExists } from '../../utils/assertTokenExists.util.js';
+import logActivityUseCase from '../../useCases/audit/logActivity.useCase.js';
 
 export const refreshController = async (req, res, next) => {
+  let userId = req.userId;
   try {
     const token = req.cookies?.accessToken;
-    assertTokenExists(token);
-
-    const currentIp =
-      req.headers['x-forwarded-for']?.split(',')[0].trim() || req.ip || null;
-    const userAgent = req.headers['user-agent'];
 
     const result = await refreshUseCase(token, currentIp, userAgent);
     if (!result.isNew) {
@@ -23,10 +19,27 @@ export const refreshController = async (req, res, next) => {
       ...cookieConfig,
     });
 
-    return res.status(200).json({
+    res.status(200).json({
       message: RESPONSE_MESSAGES[SUCCESS_CODES.REFRESH_TOKEN],
     });
+
+    logActivityUseCase({
+      actor: { userId, email: null },
+      action: 'AUTH_REFRESH',
+      status: 'SUCCESS',
+      context: req.userMetadata,
+    });
+
   } catch (err) {
+
+    logActivityUseCase({
+      actor: { userId, email: null },
+      action: 'AUTH_REFRESH',
+      status: 'FAILED',
+      failureReason: err,
+      context: req.userMetadata,
+    });
+
     next(err);
   }
 };

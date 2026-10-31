@@ -23,6 +23,7 @@ import resetPasswordController from '../controllers/auth/resetPassword.controlle
 import { refreshController } from '../controllers/auth/refresh.controller.js';
 
 import protect from "../middlewares/auth.middleware.js";
+
 const authRouter = Router();
 
 authRouter.get('/ping', (req, res) => {
@@ -57,6 +58,6 @@ authRouter.post(
   resetPasswordController,
 );
 
-authRouter.post('/refresh', refreshController);
+authRouter.post('/refresh', protect, refreshController);
 
 export default authRouter;

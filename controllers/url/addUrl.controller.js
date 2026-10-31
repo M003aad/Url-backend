@@ -24,7 +24,7 @@ export async function addUrlController(req, res, next) {
   } catch (err) {
 
     logActivityUseCase({
-      actor: { userId, email: null },
+      actor: { userId: userId, email: null },
       action: 'URL_CREATE',
       status: 'FAILED',
       failureReason: err,
