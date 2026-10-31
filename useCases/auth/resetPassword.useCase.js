@@ -52,7 +52,7 @@ export const resetPasswordUseCase = async (rawToken, password) => {
 
     await session.commitTransaction();
 
-    return { success: true };
+    return user._id;
   } catch (error) {
     await session.abortTransaction();
     throw error;
