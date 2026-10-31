@@ -11,6 +11,7 @@ const auditLogSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: [
+        'NOT_FOUND',
         'AUTH_LOGIN',
         'AUTH_LOGOUT',
         'AUTH_LOGOUTFROMALL',
