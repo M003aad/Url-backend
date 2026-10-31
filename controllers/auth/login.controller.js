@@ -2,10 +2,10 @@ import RESPONSE_MESSAGES from '../../constants/responseMessages.constant.js';
 import SUCCESS_CODES from '../../constants/successCodes.constant.js';
 import loginUseCase from '../../useCases/auth/login.useCase.js';
 import { cookieConfig, TOKEN_LIFETIMES } from '../../config/cookie.config.js';
-import logActivity from "../../services/audit.service.js";
+import logActivityUseCase from '../../useCases/audit/logActivity.useCase.js';
 
 export async function loginController(req, res, next) {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
 
   try {
     const data = { email, password };
@@ -22,7 +22,7 @@ export async function loginController(req, res, next) {
       message: RESPONSE_MESSAGES[SUCCESS_CODES.LOGIN],
     });
     
-    logActivity({
+    logActivityUseCase({
       actor: { userId: userId, email: email },
       action: 'AUTH_LOGIN',
       status: 'SUCCESS',
@@ -31,7 +31,7 @@ export async function loginController(req, res, next) {
 
   } catch (err) {
 
-    logActivity({
+    logActivityUseCase({
       actor: { userId: null, email: email},
       action: 'AUTH_LOGIN',
       status: 'FAILED',

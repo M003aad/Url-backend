@@ -8,7 +8,7 @@ import { assertUserExists } from '../../utils/assertValidUser.util.js';
 
 export const logoutFromAllUseCase = async (token) => {
   const decoded = verifyJWT(token, { ignoreExpiration: true });
-  console.log(decoded);
+
   const { userId, role, sessionId } = decoded;
 
   assertValidSessionPayload({ userId, role, sessionId });
@@ -17,10 +17,6 @@ export const logoutFromAllUseCase = async (token) => {
   assertActiveSession(session);
 
   const user = await findUserByIdentity({ id: userId }, 'role status');
-
-  assertUserExists(user);
-
-  assertRoleMatches(user.role, role);
 
   await logoutFromAll(userId);
 

@@ -15,7 +15,7 @@ const auditLogSchema = new mongoose.Schema(
         'AUTH_LOGOUT',
         'AUTH_LOGOUTFROMALL',
         'AUTH_ACTIVATE',
-        'AUTH_RESEND_ACTIVATION',
+        'AUTH_RESEND_ACTIVATE',
         'AUTH_RESED_PASSWORD',
         'AUTH_FORGET_PASSWORD',
         'AUTH_REFRESH',

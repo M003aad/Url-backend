@@ -33,6 +33,11 @@ export const activateUseCase = async (rawToken) => {
     await activateAccount(activationToken.user, { session });
 
     await session.commitTransaction();
+
+    const userId = user._id;
+
+    return userId;
+
   } catch (error) {
     await session.abortTransaction();
     throw error;

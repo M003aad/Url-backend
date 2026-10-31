@@ -7,16 +7,13 @@ import env from '../../config/env.config.js';
 import TYPE_MAIL from '../../constants/typesMail.constant.js';
 import { assertEmailNotVerified } from '../../utils/assertValidUser.util.js';
 import checkUserStatus from '../../utils/checkUserStatus.util.js';
-import RESPONSE_MESSAGES from '../../constants/responseMessages.constant.js';
-import ERROR_CODES from '../../constants/errorCodes.constant.js';
-import AppError from '../../errors/appError.error.js';
 
 export const resendActivationUseCase = async (email) => {
+  
   const user = await findUserByIdentity(
     { email },
-    'email emailVerified status username ',
+    'email firstName emailVerified status',
   );
-
   assertEmailNotVerified(user);
   checkUserStatus(user.status);
 
@@ -30,24 +27,26 @@ export const resendActivationUseCase = async (email) => {
 
   try {
     await createActivationToken(user._id, hashedToken, expiresAt, { session });
-
     await session.commitTransaction();
+
+    setImmediate(() => {
+      sendTypedMail({
+        type: TYPE_MAIL.ACTIVATION,
+        to: user.email,
+        payload: { username: user.firstName, activationLink },
+      }).catch((mailError) => {
+        console.error(`Mail dispatch failed for ${user.email}:`, mailError);
+      });
+    });
+
+    return user._id;
+
   } catch (error) {
     await session.abortTransaction();
     throw error;
   } finally {
     await session.endSession();
   }
-
-  setImmediate(() => {
-    sendTypedMail({
-      type: TYPE_MAIL.ACTIVATION,
-      to: user.email,
-      payload: { username: user.firstName, activationLink },
-    }).catch((mailError) => {
-      console.error(`Mail dispatch failed for ${user.email}:`, mailError);
-    });
-  });
 };
 
 export default resendActivationUseCase;

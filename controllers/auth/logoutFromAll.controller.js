@@ -2,7 +2,7 @@ import RESPONSE_MESSAGES from '../../constants/responseMessages.constant.js';
 import SUCCESS_CODES from '../../constants/successCodes.constant.js';
 import logoutFromAllUseCase from '../../useCases/auth/logoutFromAll.useCase.js';
 import { assertTokenExists } from '../../utils/assertTokenExists.util.js';
-import logActivity from '../../services/audit.service.js';
+import logActivityUseCase from '../../useCases/audit/logActivity.useCase.js';
 
 export async function logoutFromAllController(req, res) {
   let userId;
@@ -21,7 +21,7 @@ export async function logoutFromAllController(req, res) {
 
     res.status(201).json({ message: RESPONSE_MESSAGES[SUCCESS_CODES.LOGOUT] });
     
-    logActivity({
+    logActivityUseCase({
       actor: { userId: userId, email: null },
       action: 'AUTH_LOGOUTFROMALL',
       status: 'SUCCESS',
@@ -29,9 +29,8 @@ export async function logoutFromAllController(req, res) {
     });
 
   } catch (error) {
-    console.log(error);
-
-    logActivity({
+    
+    logActivityUseCase({
       actor: { userId: userId || null, email: null },
       action: 'AUTH_LOGOUTFROMALL',
       status: 'FAILED',

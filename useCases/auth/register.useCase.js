@@ -40,7 +40,6 @@ export const registerUseCase = async (data) => {
   } finally {
     await session.endSession();
   }
-  console.timeEnd('⏱️ 3. DB Transaction');
 
   setImmediate(() => {
     sendTypedMail({
@@ -51,8 +50,9 @@ export const registerUseCase = async (data) => {
       console.error(`Mail dispatch failed for ${user.email}:`, mailError);
     });
   });
+  const userId = user._id;
 
-  return user;
+  return { userId, email };
 };
 
 export default registerUseCase;

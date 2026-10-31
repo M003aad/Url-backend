@@ -1,6 +1,6 @@
 import RESPONSE_MESSAGES from '../../constants/responseMessages.constant.js';
 import SUCCESS_CODES from '../../constants/successCodes.constant.js';
-import logActivity from '../../services/audit.service.js';
+import { logActivityUseCase } from '../../useCases/audit/logActivity.useCase.js';
 import logoutUseCase from '../../useCases/auth/logout.useCase.js';
 import { assertTokenExists } from '../../utils/assertTokenExists.util.js';
 
@@ -22,7 +22,7 @@ export async function logoutController(req, res) {
       message: RESPONSE_MESSAGES[SUCCESS_CODES.LOGOUT],
     });
     
-    logActivity({
+    logActivityUseCase({
       actor: { userId: userId, email: null },
       action: 'AUTH_LOGOUT',
       status: 'SUCCESS',
@@ -31,7 +31,7 @@ export async function logoutController(req, res) {
 
   } catch (error) {
 
-    logActivity({
+    logActivityUseCase({
       actor: { userId: userId || null , email: null },
       action: 'AUTH_LOGOUT',
       status: 'FAILED',
