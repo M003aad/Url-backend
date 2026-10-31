@@ -9,7 +9,6 @@ export const addUrlUseCase = async (userId, url) => {
 
   const length = Number(env.LENGTH_CODE) || 4;
 
-  try {
     const code = generateRandomCodeForShortUrl(length);
     const shortUrl = `${env.REDIRECT_URL}/r/${code}`;
 
@@ -21,12 +20,6 @@ export const addUrlUseCase = async (userId, url) => {
     });
 
     return shortUrl;
-  } catch (error) {
-    if (error.code === 11000) {
-      throw new AppError('URL code collision, please try again', 409, 'URL_EXISTS');
-    }
-    throw error;
-  }
 };
 
 export default addUrlUseCase;

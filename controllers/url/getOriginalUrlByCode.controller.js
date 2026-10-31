@@ -1,4 +1,5 @@
 import AppError from '../../errors/appError.error.js';
+import logActivityUseCase from '../../useCases/audit/logActivity.useCase.js';
 import getOriginalUrlByCodeUseCase from '../../useCases/url/getOriginalUrlByCode.useCase.js';
 
 export async function getOriginalUrlByCodeController(req, res, next) {
@@ -13,8 +14,25 @@ export async function getOriginalUrlByCodeController(req, res, next) {
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
 
-    return res.redirect(302, originalUrl);
+    res.redirect(302, originalUrl);
+
+    logActivityUseCase({
+      actor: { userId : null, email: null },
+      action: 'URL_REDIRECT',
+      status: 'SUCCESS',
+      context: req.userMetadata,
+    });
+
   } catch (err) {
+
+    logActivityUseCase({
+      actor: { userId: null, email: null },
+      action: 'URL_REDIRECT',
+      status: 'FAILED',
+      failureReason: err,
+      context: req.userMetadata,
+    });
+
     next(err);
   }
 }
