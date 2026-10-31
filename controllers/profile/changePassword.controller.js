@@ -1,7 +1,7 @@
 import RESPONSE_MESSAGES from '../../constants/responseMessages.constant.js';
 import SUCCESS_CODES from '../../constants/successCodes.constant.js';
-import logActivityUseCase from '../../useCases/audit/logActivity.useCase.js';
 import changePasswordUseCase from '../../useCases/profile/changePassword.useCase.js';
+import logActivityUseCase from '../../useCases/audit/logActivity.useCase.js';
 
 export async function changePasswordController(req, res, next) {
   let userId = req.userId;
@@ -26,7 +26,7 @@ export async function changePasswordController(req, res, next) {
 
     logActivityUseCase({
       actor: { userId: userId, email: null },
-      action: 'USER_UPDATE_PROFILE',
+      action: 'USER_CHANGE_PASSWORD',
       status: 'FAILED',
       failureReason: err,
       context: req.userMetadata,
