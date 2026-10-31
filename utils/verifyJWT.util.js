@@ -30,7 +30,7 @@ export const verifyJWT = (token, options = {}) => {
     if (error.name === 'JsonWebTokenError') {
       throw new AppError(
         RESPONSE_MESSAGES[ERROR_CODES.UNAUTHORIZED],
-        400,
+        401,
         ERROR_CODES.JSON_WEB_TOKEN_ERROR,
       );
     }
