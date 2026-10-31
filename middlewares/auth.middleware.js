@@ -30,7 +30,7 @@ export const protect = async (req, res, next) => {
       action: 'AUTH_PROTECT',
       status: 'FAILED',
       //  the  logs save error cliennt  not real error
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
