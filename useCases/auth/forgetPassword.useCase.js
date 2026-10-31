@@ -29,7 +29,8 @@ export const forgetPasswordUseCase = async (email) => {
   try {
     await createResetToken(userId, hashedToken, expiresAt, { session });
 
-    await sendTypedMail({
+    setImmediate(() => { 
+      sendTypedMail({
       type: TYPE_MAIL.RESET,
       to: user.email,
       payload: {
@@ -38,24 +39,17 @@ export const forgetPasswordUseCase = async (email) => {
       },
     });
 
+    });
+    
     await session.commitTransaction();
   } catch (error) {
     await session.abortTransaction();
-
-    if (error.code !== 'MONGODB_ERROR') {
-      console.error(`Failed to send password reset email to ${user.email}:`, error);
-      throw new AppError(
-        RESPONSE_MESSAGES[ERROR_CODES.MAIL_FAILED_TO_SEND],
-        500,
-        ERROR_CODES.MAIL_FAILED_TO_SEND,
-      );
-    }
     throw error;
   } finally {
     await session.endSession();
   }
 
-  return { success: true };
+  return userId;
 };
 
 export default forgetPasswordUseCase;
