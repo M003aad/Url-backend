@@ -1,6 +1,7 @@
 import ERROR_CODES from '../constants/errorCodes.constant.js';
 import AppError from '../errors/appError.error.js';
 import RESPONSE_MESSAGES from '../constants/responseMessages.constant.js';
+import logActivityUseCase from '../useCases/audit/logActivity.useCase.js';
 
 const validate = (schema) => (req, res, next) => {
   const { error, value } = schema.validate(
@@ -19,6 +20,14 @@ const validate = (schema) => (req, res, next) => {
     const errorCode = error.details[0].message || ERROR_CODES.BAD_REQUEST;
     const userFriendlyMessage = RESPONSE_MESSAGES[errorCode] || 'Invalid input data.';
 
+    logActivityUseCase({
+      actor: { userId: null, email: null },
+      action: 'VALIDATION',
+      status: 'FAILED',
+      failureReason: error,
+      context: req.userMetadata,
+    });
+
     return next(new AppError(userFriendlyMessage, 400, errorCode));
   }
 
@@ -28,6 +37,14 @@ const validate = (schema) => (req, res, next) => {
     Object.keys(req.query).forEach((key) => delete req.query[key]);
     Object.assign(req.query, value.query);
   }
+
+  logActivityUseCase({
+    actor: { userId: null, email: null },
+    action: 'VALIDATION',
+    status: 'SUCCESS',
+    context: req.userMetadata,
+  });
+
   next();
 };
 
