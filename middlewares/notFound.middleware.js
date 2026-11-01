@@ -9,6 +9,7 @@ const notFound = (req, res, next) => {
     actor: { userId: null, email: null },
     action: 'NOT_FOUND',
     status: 'FAILED',
+    failureReason: err.code,
     context: req.userMetadata,
   });
 
