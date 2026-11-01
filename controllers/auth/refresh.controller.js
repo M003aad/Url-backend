@@ -36,7 +36,7 @@ export const refreshController = async (req, res, next) => {
       actor: { userId, email: null },
       action: 'AUTH_REFRESH',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
