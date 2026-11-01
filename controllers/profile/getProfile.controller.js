@@ -26,7 +26,7 @@ export async function getProfileController(req, res, next) {
       actor: { userId: userId, email: email },
       action: 'USER_GET_PROFILE',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
