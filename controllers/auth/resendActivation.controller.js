@@ -28,7 +28,7 @@ export async function resendActivationController(req, res, next) {
       actor: { userId: userId || null, email: email || null },
       action: 'AUTH_RESEND_ACTIVATE',
       status: 'FAILED',
-      failureReason: err.message || err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
