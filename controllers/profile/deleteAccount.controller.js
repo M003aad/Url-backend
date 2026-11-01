@@ -26,7 +26,7 @@ export async function deleteAccountController(req, res) {
       actor: { userId: userId, email: null },
       action: 'USER_DELETE_PROFILE',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
