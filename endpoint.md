@@ -41,5 +41,3 @@ All profile endpoints require authentication. The application reads the `accessT
 
 - Protected endpoints use the `accessToken` cookie set by login; send cookies with requests to those endpoints.
 - Registration requires a password of 8–128 characters containing lowercase and uppercase letters, a digit, and one of the accepted special characters.
-- Profile updates require both names (3–20 characters each). Registration allows names of 2–20 characters.
-- The refresh controller currently references `currentIp` and `userAgent` without defining them. As written, `/auth/refresh` can fail before completing its intended refresh behavior.
