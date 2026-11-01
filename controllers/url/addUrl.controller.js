@@ -27,7 +27,7 @@ export async function addUrlController(req, res, next) {
       actor: { userId: userId, email: null },
       action: 'URL_CREATE',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
