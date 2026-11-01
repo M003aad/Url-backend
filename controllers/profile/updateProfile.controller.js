@@ -29,7 +29,7 @@ export async function updateProfileController(req, res, next) {
       actor: { userId: userId, email: null },
       action: 'USER_UPDATE_PROFILE',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
