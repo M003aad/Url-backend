@@ -35,7 +35,7 @@ export async function loginController(req, res, next) {
       actor: { userId: null, email: email},
       action: 'AUTH_LOGIN',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata, 
     });
 
