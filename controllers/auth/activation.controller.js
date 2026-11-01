@@ -24,7 +24,7 @@ export async function activationController(req, res, next) {
       actor: { userId: userId || null, email : null },
       action: 'AUTH_ACTIVATE',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
