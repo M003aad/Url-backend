@@ -28,7 +28,7 @@ export async function changePasswordController(req, res, next) {
       actor: { userId: userId, email: null },
       action: 'USER_CHANGE_PASSWORD',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
