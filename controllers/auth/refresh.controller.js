@@ -9,8 +9,15 @@ export const refreshController = async (req, res, next) => {
   try {
     const token = req.cookies?.accessToken;
 
-    const result = await refreshUseCase(token, currentIp, userAgent);
+    const result = await refreshUseCase(token);
     if (!result.isNew) {
+      logActivityUseCase({
+        actor: { userId, email: null },
+        action: 'AUTH_REFRESH',
+        status: 'SUCCESS',
+        failureReason: 'The access token is still active and valid.',
+        context: req.userMetadata,
+      });
       return res.status(200).json({
         message: 'The access token is still active and valid.',
       });

@@ -2,10 +2,10 @@ import verifyJWT from '../../utils/verifyJWT.util.js';
 import { assertTokenExists } from '../../utils/assertTokenExists.util.js';
 import { findSessionById } from '../../services/JWT/jwt.service.js';
 import { findUserByIdentity } from '../../services/domain/user.service.js';
-import { assertActiveSession } from '../../utils/assertValidSession.util.js';
+import { assertActiveSession, assertValidDataInSession } from '../../utils/assertValidSession.util.js';
+import {  assertRoleMatches } from '../../utils/assertRoleMatches.utils.js'
 import {
   assertEmailIsVerified,
-  assertUserExists,
 } from '../../utils/assertValidUser.util.js';
 import checkUserStatus from '../../utils/checkUserStatus.util.js';
 
@@ -20,10 +20,11 @@ export const authenticateUseCase = async (token) => {
     { id: decoded.userId },
     'firstName lastName email emailVerified status role',
   );
-
-  assertUserExists(user);
+  
+  assertValidDataInSession(session, { userId : decoded.userId });
   assertEmailIsVerified(user);
   checkUserStatus(user.status);
+  assertRoleMatches(user.role, decoded.role); // Fixed: Passed clear fields instead of boolean expression
 
   return {
     user,

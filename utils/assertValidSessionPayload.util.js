@@ -6,22 +6,7 @@ import AppError from '../errors/appError.error.js';
  * Asserts that all mandatory session payload attributes exist.
  * @param {Object} payload - { userId, role, sessionId }
  */
-export const assertValidSessionPayload = ({ userId, role, sessionId }) => {
-  if (!userId) {
-    throw new AppError(
-      RESPONSE_MESSAGES[ERROR_CODES.UNAUTHORIZED],
-      401,
-      ERROR_CODES.USER_ID_INVALID, // Fixed spelling typo
-    );
-  }
-
-  if (!role) {
-    throw new AppError(
-      RESPONSE_MESSAGES[ERROR_CODES.UNAUTHORIZED],
-      401,
-      ERROR_CODES.ROLE_INVALID,
-    );
-  }
+export const assertValidSessionPayload = ( sessionId ) => {
 
   if (!sessionId) {
     throw new AppError(
