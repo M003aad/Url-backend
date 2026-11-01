@@ -33,7 +33,7 @@ export async function getAllUrlsController(req, res, next) {
       actor: { userId, email: null },
       action: 'URL_GET_ALL_URL',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
