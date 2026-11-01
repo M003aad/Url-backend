@@ -23,7 +23,7 @@ export async function deleteUrlController(req, res, next) {
       actor: { userId, email: null },
       action: 'URL_DELETE',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
