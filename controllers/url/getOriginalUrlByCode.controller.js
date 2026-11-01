@@ -29,7 +29,7 @@ export async function getOriginalUrlByCodeController(req, res, next) {
       actor: { userId: null, email: null },
       action: 'URL_REDIRECT',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
