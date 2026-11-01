@@ -27,7 +27,7 @@ export async function registerController(req, res, next) {
       actor: { userId: userId || null, email },
       action: 'AUTH_REGISTER',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
