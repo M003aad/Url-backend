@@ -28,7 +28,7 @@ export async function resetPasswordController(req, res, next) {
       actor: { userId: userId || null, email: null },
       action: 'AUTH_RESET_PASSWORD',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
