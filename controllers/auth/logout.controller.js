@@ -35,7 +35,7 @@ export async function logoutController(req, res) {
       actor: { userId: userId || null , email: null },
       action: 'AUTH_LOGOUT',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
