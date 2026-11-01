@@ -27,7 +27,7 @@ export async function forgetPasswordController(req, res, next) {
       actor: { userId: userId || null, email : email || null },
       action: 'AUTH_FORGET_PASSWORD',
       status: 'FAILED',
-      failureReason: err,
+      failureReason: err.code,
       context: req.userMetadata,
     });
 
